@@ -1,0 +1,176 @@
+# Insomnia export v4
+_type: "export"
+__export_format: 4
+__export_date: "2025-10-18T00:00:00.000Z"
+__export_source: "insomnia.desktop.app:v2025.1"
+resources:
+  - _id: "req_register_success"
+    _type: "request"
+    name: "Register - success"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "name": "Test User",
+          "email": "test@example.com",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_register_email_existing"
+    _type: "request"
+    name: "Register - email exists"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "name": "Test User",
+          "email": "test@example.com",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_register_missing_fields"
+    _type: "request"
+    name: "Register - missing fields"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": "only@example.com"
+        }
+
+  - _id: "req_register_invalid_email"
+    _type: "request"
+    name: "Register - invalid email"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "name": "Test User",
+          "email": "not-an-email",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_register_invalid_password"
+    _type: "request"
+    name: "Register - invalid password"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "name": "Test User",
+          "email": "new@example.com",
+          "password": "123"
+        }
+
+  - _id: "req_register_malformed"
+    _type: "request"
+    name: "Register - malformed"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        { invalid_json
+
+  - _id: "req_login_success"
+    _type: "request"
+    name: "Login - success"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": "test@example.com",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_login_missing_fields"
+    _type: "request"
+    name: "Login - missing fields"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": ""
+        }
+
+  - _id: "req_login_invalid_password"
+    _type: "request"
+    name: "Login - invalid password"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": "test@example.com",
+          "password": "wrong"
+        }
+
+  - _id: "req_login_invalid_email_format"
+    _type: "request"
+    name: "Login - invalid email format"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": "not-an-email",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_login_malformed"
+    _type: "request"
+    name: "Login - malformed"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        { bad json
+
+  - _id: "req_protected_with_token"
+    _type: "request"
+    name: "Protected - with token"
+    method: "GET"
+    url: "http://localhost:3000/api/protected"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_protected_no_token"
+    _type: "request"
+    name: "Protected - no token"
+    method: "GET"
+    url: "http://localhost:3000/api/protected"
+
+  - _id: "req_protected_invalid_token"
+    _type: "request"
+    name: "Protected - invalid token"
+    method: "GET"
+    url: "http://localhost:3000/api/protected"
+    headers:
+      - name: "Authorization"
+        value: "Bearer invalid.token.here"
+
+  - _id: "workspace_1"
+    _type: "workspace"
+    name: "Backend-em-Express"
+    scope: "collection"
+
+_meta:
+  exportedBy: "assistant"
