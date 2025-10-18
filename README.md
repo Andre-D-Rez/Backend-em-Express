@@ -84,7 +84,7 @@ npm start
 
 ### Via Script de Testes
 ```bash
-./test-endpoints.sh
+./scripts/test-endpoints.sh
 ```
 
 ### Via Insomnia/Postman

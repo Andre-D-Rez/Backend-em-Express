@@ -1,7 +1,7 @@
 #!/bin/bash
 # Quick Start - Backend em Express
 
-echo "🚀 Backend em Express - Quick Start"
+echo "Backend em Express - Quick Start"
 echo ""
 
 # Verificar se .env existe
@@ -40,7 +40,7 @@ npm run build
 if [ $? -eq 0 ]; then
     echo "✅ Build concluído com sucesso!"
     echo ""
-    echo "🎯 Escolha uma opção:"
+    echo "Escolha uma opção:"
     echo "1) Iniciar servidor de desenvolvimento (npm run dev)"
     echo "2) Iniciar servidor de produção (npm start)"
     echo "3) Executar testes dos endpoints (./test-endpoints.sh)"
@@ -63,7 +63,7 @@ if [ $? -eq 0 ]; then
             ./test-endpoints.sh
             ;;
         4)
-            echo "👋 Até logo!"
+            echo "Até logo!"
             exit 0
             ;;
         *)
