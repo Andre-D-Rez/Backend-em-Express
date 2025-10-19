@@ -2,6 +2,9 @@
 
 API RESTful com autenticação JWT, MongoDB e arquitetura em camadas (MVC).
 
+### Vídeo explicativo
+Assista ao vídeo para uma explicação/demonstração rapída do projeto https://youtu.be/l7WnbtVhUq0
+
 ## 📋 Funcionalidades
 
 ### Rotas Públicas
@@ -112,25 +115,6 @@ curl -X GET http://localhost:porta/api/protected \
   -H "Authorization: Bearer SEU_TOKEN_AQUI"
 ```
 
-## 📦 Deploy
-
-### Vercel (Recomendado para backend Node.js)
-
-1. Instale a Vercel CLI:
-```bash
-npm i -g vercel
-```
-
-2. Configure as variáveis de ambiente no dashboard da Vercel:
-   - `MONGO_URI` - Connection string do MongoDB Atlas
-   - `JWT_SECRET` - Chave secreta para JWT
-   - `JWT_EXPIRES_IN` - Tempo de expiração do token (ex: 1d)
-
-3. Deploy:
-```bash
-vercel --prod
-```
-
 ## 🔒 Validações Implementadas
 
 ### Cadastro (/register)
@@ -172,7 +156,3 @@ vercel --prod
 - **bcrypt** - Hash de senhas
 - **Winston** - Logging estruturado
 - **dotenv** - Gerenciamento de variáveis de ambiente
-
-## Vídeo explicativo
-Assista ao vídeo para uma explicação rapída do projeto
-[link]
