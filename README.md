@@ -52,15 +52,15 @@ npm install
 Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/backend-em-express
-JWT_SECRET=seu_secret_super_seguro_aqui
-JWT_EXPIRES_IN=1d
+PORT= sua porta
+MONGO_URI= link do mongodb
+JWT_SECRET= senha
+JWT_EXPIRES_IN= por quanto tempo o token JWT será válido após emitido
 ```
 
 **Para MongoDB local com Docker:**
 ```bash
-docker run -d --name mongo-dev -p 27017:27017 mongo:6
+docker run -d --name mongo-dev -p porta:porta mongo:6
 ```
 
 **Para MongoDB Atlas (produção):**
@@ -94,21 +94,21 @@ Importe o arquivo `requests/requests.yaml` no Insomnia para testar todos os cen�
 
 **Cadastro:**
 ```bash
-curl -X POST http://localhost:3000/api/register \
+curl -X POST http://localhost:porta/api/register \
   -H "Content-Type: application/json" \
   -d '{"name":"João Silva","email":"joao@example.com","password":"S3nh@Forte!"}'
 ```
 
 **Login:**
 ```bash
-curl -X POST http://localhost:3000/api/login \
+curl -X POST http://localhost:porta/api/login \
   -H "Content-Type: application/json" \
   -d '{"email":"joao@example.com","password":"S3nh@Forte!"}'
 ```
 
 **Rota Protegida:**
 ```bash
-curl -X GET http://localhost:3000/api/protected \
+curl -X GET http://localhost:porta/api/protected \
   -H "Authorization: Bearer SEU_TOKEN_AQUI"
 ```
 
