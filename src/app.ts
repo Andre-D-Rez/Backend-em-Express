@@ -6,15 +6,30 @@ import authRouter from './routes/auth.routes';
 import protectedRouter from './routes/protected.routes';
 import logger from './utils/logger';
 
-export const startServer = (port: number) => {
+export const createApp = () => {
   const app = express();
 
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
 
+  // Healthcheck e rota raiz
+  app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'ok' });
+  });
+
+  app.get('/', (_req, res) => {
+    res.status(200).send('API online. Veja /health ou use as rotas em /api.');
+  });
+
   app.use('/api', authRouter);
   app.use('/api', protectedRouter);
+
+  return app;
+};
+
+export const startServer = (port: number) => {
+  const app = createApp();
 
   connectDB()
     .then(() => {
