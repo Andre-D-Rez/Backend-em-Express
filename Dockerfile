@@ -28,7 +28,7 @@ RUN npm install --omit=dev
 EXPOSE 3000
 
 # Ambiente de execução
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 
-# Comando para iniciar o servidor
-CMD ["node", "dist/server.js"]
+# Comando para iniciar o servidor (corrigido para dist/index.js)
+CMD ["node", "dist/index.js"]
