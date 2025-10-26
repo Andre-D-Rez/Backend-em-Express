@@ -11,6 +11,69 @@ interface AuthRequest extends Request {
   };
 }
 
+/**
+ * @swagger
+ * /api/series:
+ *   post:
+ *     summary: Criar nova série
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - titulo
+ *               - nota
+ *               - numeroTemporadas
+ *               - episodiosTotais
+ *               - episodiosAssistidos
+ *               - status
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *                 example: Breaking Bad
+ *               nota:
+ *                 type: number
+ *                 minimum: 0
+ *                 maximum: 10
+ *                 example: 9.5
+ *               numeroTemporadas:
+ *                 type: integer
+ *                 minimum: 1
+ *                 example: 5
+ *               episodiosTotais:
+ *                 type: integer
+ *                 minimum: 1
+ *                 example: 62
+ *               episodiosAssistidos:
+ *                 type: integer
+ *                 minimum: 0
+ *                 example: 45
+ *               status:
+ *                 type: string
+ *                 enum: [planejado, assistindo, concluido]
+ *                 example: assistindo
+ *     responses:
+ *       201:
+ *         description: Série criada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 series:
+ *                   $ref: '#/components/schemas/Series'
+ *       401:
+ *         description: Não autenticado
+ *       422:
+ *         description: Dados inválidos
+ */
 export const createSeries = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
@@ -102,7 +165,51 @@ export const createSeries = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const getAllSeries = async (req: AuthRequest, res: Response) => {
+/**
+ * @swagger
+ * /api/series:
+ *   get:
+ *     summary: Listar todas as séries do usuário
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [planejado, assistindo, concluido]
+ *         description: Filtrar por status
+ *       - in: query
+ *         name: titulo
+ *         schema:
+ *           type: string
+ *         description: Buscar por título (parcial)
+ *       - in: query
+ *         name: nota
+ *         schema:
+ *           type: number
+ *         description: Filtrar por nota específica
+ *     responses:
+ *       200:
+ *         description: Lista de séries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 total:
+ *                   type: integer
+ *                 series:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Series'
+ *       401:
+ *         description: Não autenticado
+ */
+export const getAllSeriesByUser = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
     if (!userId) {
@@ -149,6 +256,33 @@ export const getAllSeries = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /api/series/{id}:
+ *   get:
+ *     summary: Buscar série por ID
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da série
+ *     responses:
+ *       200:
+ *         description: Série encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Series'
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Série não encontrada
+ */
 export const getSeriesById = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
@@ -179,6 +313,72 @@ export const getSeriesById = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /api/series/{id}:
+ *   put:
+ *     summary: Atualizar série (todos os campos obrigatórios)
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da série
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - titulo
+ *               - nota
+ *               - numeroTemporadas
+ *               - episodiosTotais
+ *               - episodiosAssistidos
+ *               - status
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *               nota:
+ *                 type: number
+ *                 minimum: 0
+ *                 maximum: 10
+ *               numeroTemporadas:
+ *                 type: integer
+ *                 minimum: 1
+ *               episodiosTotais:
+ *                 type: integer
+ *                 minimum: 1
+ *               episodiosAssistidos:
+ *                 type: integer
+ *                 minimum: 0
+ *               status:
+ *                 type: string
+ *                 enum: [planejado, assistindo, concluido]
+ *     responses:
+ *       200:
+ *         description: Série atualizada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 series:
+ *                   $ref: '#/components/schemas/Series'
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Série não encontrada
+ *       422:
+ *         description: Dados inválidos
+ */
 export const updateSeriesFull = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
@@ -281,6 +481,68 @@ export const updateSeriesFull = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /api/series/{id}:
+ *   patch:
+ *     summary: Atualizar série parcialmente (campos opcionais)
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da série
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *               nota:
+ *                 type: number
+ *                 minimum: 0
+ *                 maximum: 10
+ *               numeroTemporadas:
+ *                 type: integer
+ *                 minimum: 1
+ *               episodiosTotais:
+ *                 type: integer
+ *                 minimum: 1
+ *               episodiosAssistidos:
+ *                 type: integer
+ *                 minimum: 0
+ *               status:
+ *                 type: string
+ *                 enum: [planejado, assistindo, concluido]
+ *           example:
+ *             episodiosAssistidos: 50
+ *             status: assistindo
+ *     responses:
+ *       200:
+ *         description: Série atualizada parcialmente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 series:
+ *                   $ref: '#/components/schemas/Series'
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Série não encontrada
+ *       422:
+ *         description: Dados inválidos ou nenhum campo enviado
+ */
 export const updateSeriesPartial = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;
@@ -375,6 +637,37 @@ export const updateSeriesPartial = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * @swagger
+ * /api/series/{id}:
+ *   delete:
+ *     summary: Deletar série
+ *     tags: [Series]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da série
+ *     responses:
+ *       200:
+ *         description: Série deletada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Série deletada com sucesso
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Série não encontrada
+ */
 export const deleteSeries = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?.id;

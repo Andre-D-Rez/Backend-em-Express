@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   createSeries,
-  getAllSeries,
+  getAllSeriesByUser,
   getSeriesById,
   updateSeriesFull,
   updateSeriesPartial,
@@ -13,7 +13,7 @@ const router = Router();
 
 // Todas as rotas de séries requerem autenticação
 router.post('/series', authenticate, createSeries);
-router.get('/series', authenticate, getAllSeries);
+router.get('/series', authenticate, getAllSeriesByUser);
 router.get('/series/:id', authenticate, getSeriesById);
 router.put('/series/:id', authenticate, updateSeriesFull);
 router.patch('/series/:id', authenticate, updateSeriesPartial);

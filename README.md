@@ -7,6 +7,14 @@ Assista ao vídeo para uma explicação/demonstração rapída do projeto (cadas
 
 Assista ao vídeo para uma explicação/demonstração rapída do projeto (serviço (CRUD)) https://www.youtube.com/watch?v=Q2vwF_D9I_g
 
+### 📚 Documentação Interativa (Swagger)
+Acesse a documentação completa da API em: **http://localhost:3000/api-docs**
+
+- Interface visual interativa para testar todos os endpoints
+- Especificação OpenAPI 3.0
+- Exemplos de requisições e respostas
+- Autenticação JWT integrada
+
 ## 📋 Funcionalidades
 
 ### Rotas Públicas

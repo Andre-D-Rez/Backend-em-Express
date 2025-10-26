@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
 import { connectDB } from './database/connection';
 import authRouter from './routes/auth.routes';
 import protectedRouter from './routes/protected.routes';
 import seriesRouter from './routes/series.routes';
 import logger from './utils/logger';
+import { swaggerSpec } from './config/swagger';
 
 export const createApp = () => {
   const app = express();
@@ -14,13 +16,19 @@ export const createApp = () => {
   app.use(express.json());
   app.use(morgan('dev'));
 
+  // Swagger documentation
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'API Séries - Documentação',
+  }));
+
   // Healthcheck e rota raiz
   app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
   });
 
   app.get('/', (_req, res) => {
-    res.status(200).send('API online. Veja /health ou use as rotas em /api.');
+    res.status(200).send('API online. Veja /health, /api-docs ou use as rotas em /api.');
   });
 
   app.use('/api', authRouter);
