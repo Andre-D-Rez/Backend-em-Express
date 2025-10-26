@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { connectDB } from './database/connection';
 import authRouter from './routes/auth.routes';
 import protectedRouter from './routes/protected.routes';
+import seriesRouter from './routes/series.routes';
 import logger from './utils/logger';
 
 export const createApp = () => {
@@ -24,6 +25,7 @@ export const createApp = () => {
 
   app.use('/api', authRouter);
   app.use('/api', protectedRouter);
+  app.use('/api', seriesRouter);
 
   return app;
 };

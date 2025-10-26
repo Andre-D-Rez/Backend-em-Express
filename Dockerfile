@@ -1,30 +1,34 @@
-# Multi-stage build para produção
-FROM node:18-alpine AS builder
+# Etapa 1: Build da aplicação
+FROM node:20 AS build
+
+# Diretório de trabalho dentro do container
 WORKDIR /app
 
-# Instalar dependências
+# Copia package.json e package-lock.json e instala dependências
 COPY package*.json ./
 RUN npm install
 
-# Copiar fontes e compilar TypeScript
-COPY tsconfig.json ./
-COPY src ./src
+# Copia o resto do projeto (src/ e tsconfig.json)
+COPY . .
+
+# Compila TypeScript para a pasta dist/
 RUN npm run build
 
-# Stage de execução (runtime) minimalista
-FROM node:18-alpine AS runner
-ENV NODE_ENV=production
+# Etapa 2: Imagem de produção
+FROM node:20-slim
+
 WORKDIR /app
 
-# Instalar somente dependências de produção
-COPY package*.json ./
+# Copia apenas os arquivos necessários da etapa de build
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
 RUN npm install --omit=dev
 
-# Copiar artefatos compilados
-COPY --from=builder /app/dist ./dist
-
-# Expor porta
+# Expõe a porta do seu servidor Express
 EXPOSE 3000
 
-# Comando de inicialização
-CMD ["npm", "start"]
+# Ambiente de execução
+ENV NODE_ENV=production
+
+# Comando para iniciar o servidor (corrigido para dist/index.js)
+CMD ["node", "dist/index.js"]

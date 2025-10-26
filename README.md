@@ -2,6 +2,11 @@
 
 API RESTful com autenticação JWT, MongoDB e arquitetura em camadas (MVC).
 
+### Vídeo explicativo
+Assista ao vídeo para uma explicação/demonstração rapída do projeto (cadastro e login) https://www.youtube.com/watch?v=l7WnbtVhUq0
+
+Assista ao vídeo para uma explicação/demonstração rapída do projeto (serviço (CRUD)) https://www.youtube.com/watch?v=Q2vwF_D9I_g
+
 ## 📋 Funcionalidades
 
 ### Rotas Públicas
@@ -10,6 +15,31 @@ API RESTful com autenticação JWT, MongoDB e arquitetura em camadas (MVC).
 
 ### Rotas Protegidas
 - **GET /api/protected** - Rota acessível apenas com token JWT válido
+
+### CRUD de Séries (protegido por JWT)
+Recurso: lista de séries por usuário autenticado. Cada usuário só enxerga e manipula as próprias séries.
+
+Campos do recurso (todos obrigatórios no POST e PUT):
+- titulo (string) - obrigatório
+- nota (number, 0 a 10) - obrigatório
+- numeroTemporadas (number, >=1) - obrigatório
+- episodiosTotais (number, >=1) - obrigatório
+- episodiosAssistidos (number, >=0 e <= episodiosTotais) - obrigatório
+- status (string: planejado | assistindo | concluido) - obrigatório
+
+Endpoints:
+- POST /api/series — cria uma série
+- GET /api/series — lista séries do usuário (filtros opcionais: status, titulo, nota)
+- GET /api/series/:id — detalhes de uma série do usuário
+- PUT /api/series/:id — atualização completa
+- PATCH /api/series/:id — atualização parcial
+- DELETE /api/series/:id — exclusão
+
+Regras de autorização e erros:
+- Requer header Authorization: Bearer <token>
+- Acesso a recursos de outro usuário retorna 404 (não encontrado)
+- Validações retornam 422 com mensagens claras
+- Erros de autenticação retornam 401
 
 ## 🏗️ Arquitetura
 
@@ -21,7 +51,7 @@ src/
 ├── controllers/     # Controladores (lógica de requisição/resposta)
 ├── database/        # Configuração de conexão com MongoDB
 ├── middlewares/     # Middlewares (autenticação, tratamento de erros)
-├── models/          # Modelos Mongoose (User)
+├── models/          # Modelos Mongoose (User e Series)
 ├── routes/          # Definição de rotas
 ├── services/        # Lógica de negócio
 └── utils/           # Utilitários (validadores, logger)
@@ -112,23 +142,41 @@ curl -X GET http://localhost:porta/api/protected \
   -H "Authorization: Bearer SEU_TOKEN_AQUI"
 ```
 
-## 📦 Deploy
+### Exemplos rápidos do CRUD de Séries
 
-### Vercel (Recomendado para backend Node.js)
-
-1. Instale a Vercel CLI:
+Criar:
 ```bash
-npm i -g vercel
+curl -X POST http://localhost:porta/api/series \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN_AQUI" \
+  -d '{
+    "titulo":"Breaking Bad",
+    "nota":9.5,
+    "numeroTemporadas":5,
+    "episodiosTotais":62,
+    "episodiosAssistidos":0,
+    "status":"planejado"
+  }'
 ```
 
-2. Configure as variáveis de ambiente no dashboard da Vercel:
-   - `MONGO_URI` - Connection string do MongoDB Atlas
-   - `JWT_SECRET` - Chave secreta para JWT
-   - `JWT_EXPIRES_IN` - Tempo de expiração do token (ex: 1d)
-
-3. Deploy:
+Listar com filtros:
 ```bash
-vercel --prod
+curl -X GET "http://localhost:porta/api/series?status=assistindo&titulo=Break&nota=9" \
+  -H "Authorization: Bearer SEU_TOKEN_AQUI"
+```
+
+Atualizar parcialmente (PATCH):
+```bash
+curl -X PATCH http://localhost:porta/api/series/:id \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN_AQUI" \
+  -d '{ "episodiosAssistidos": 10, "status":"assistindo" }'
+```
+
+Deletar:
+```bash
+curl -X DELETE http://localhost:porta/api/series/:id \
+  -H "Authorization: Bearer SEU_TOKEN_AQUI"
 ```
 
 ## 🔒 Validações Implementadas
@@ -172,7 +220,3 @@ vercel --prod
 - **bcrypt** - Hash de senhas
 - **Winston** - Logging estruturado
 - **dotenv** - Gerenciamento de variáveis de ambiente
-
-## Vídeo explicativo
-Assista ao vídeo para uma explicação rapída do projeto
-[link]
