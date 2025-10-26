@@ -227,4 +227,16 @@ curl -X DELETE http://localhost:porta/api/series/:id \
 - **JWT** - Autenticação via tokens
 - **bcrypt** - Hash de senhas
 - **Winston** - Logging estruturado
-- **dotenv** - Gerenciamento de variáveis de ambiente
+- **dotenv** - Gerenciamento de variáveis de ambiente## 🚀 Deploy em Produção (Vercel)
+
+Para fazer deploy no Vercel e resolver o problema da tela branca do Swagger, consulte o guia completo:
+
+👉 **[DEPLOY.md](./DEPLOY.md)** - Instruções detalhadas de deploy
+
+**Resumo rápido:**
+- O Swagger foi adaptado para funcionar em ambientes serverless
+- Em produção, usa Swagger UI via CDN (sem tela branca)
+- Configure `NODE_ENV=production` e as variáveis de ambiente no Vercel
+- Acesse `/api-docs` normalmente após o deploy
+
+

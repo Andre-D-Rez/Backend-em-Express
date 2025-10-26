@@ -13,8 +13,10 @@ const swaggerDefinition: SwaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:3000',
-      description: 'Servidor de desenvolvimento',
+      url: process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : 'http://localhost:3000',
+      description: process.env.VERCEL_URL ? 'Servidor de produção (Vercel)' : 'Servidor de desenvolvimento',
     },
   ],
   components: {
