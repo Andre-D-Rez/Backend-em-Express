@@ -1,4 +1,3 @@
-# Insomnia export v4
 _type: "export"
 __export_format: 4
 __export_date: "2025-10-18T00:00:00.000Z"
@@ -166,6 +165,458 @@ resources:
     headers:
       - name: "Authorization"
         value: "Bearer invalid.token.here"
+
+  # ========== SERIES ENDPOINTS ==========
+
+  - _id: "req_series_create_success"
+    _type: "request"
+    name: "Series - Create (success)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Breaking Bad",
+          "nota": 9.5,
+          "numeroTemporadas": 5,
+          "episodiosTotais": 62,
+          "episodiosAssistidos": 0,
+          "status": "planejado"
+        }
+
+  - _id: "req_series_create_assistindo"
+    _type: "request"
+    name: "Series - Create (assistindo)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Stranger Things",
+          "nota": 8.7,
+          "numeroTemporadas": 4,
+          "episodiosTotais": 34,
+          "episodiosAssistidos": 15,
+          "status": "assistindo"
+        }
+
+  - _id: "req_series_create_concluida"
+    _type: "request"
+    name: "Series - Create (concluída)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "The Office",
+          "nota": 9.0,
+          "numeroTemporadas": 9,
+          "episodiosTotais": 201,
+          "episodiosAssistidos": 201,
+          "status": "concluido"
+        }
+
+  - _id: "req_series_create_no_token"
+    _type: "request"
+    name: "Series - Create (no token)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Game of Thrones",
+          "numeroTemporadas": 8,
+          "episodiosTotais": 73
+        }
+
+  - _id: "req_series_create_invalid_token"
+    _type: "request"
+    name: "Series - Create (invalid token)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer invalid.token.here"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Game of Thrones",
+          "numeroTemporadas": 8,
+          "episodiosTotais": 73
+        }
+
+  - _id: "req_series_create_missing_fields"
+    _type: "request"
+    name: "Series - Create (missing fields)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Incomplete Series"
+        }
+
+  - _id: "req_series_create_invalid_nota"
+    _type: "request"
+    name: "Series - Create (invalid nota)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Bad Score",
+          "nota": 15,
+          "numeroTemporadas": 1,
+          "episodiosTotais": 10,
+          "episodiosAssistidos": 0,
+          "status": "planejado"
+        }
+
+  - _id: "req_series_create_invalid_status"
+    _type: "request"
+    name: "Series - Create (invalid status)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Invalid Status",
+          "nota": 8,
+          "numeroTemporadas": 1,
+          "episodiosTotais": 10,
+          "episodiosAssistidos": 0,
+          "status": "invalido"
+        }
+
+  - _id: "req_series_create_episodios_excedem"
+    _type: "request"
+    name: "Series - Create (episódios assistidos excedem total)"
+    method: "POST"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Too Many Watched",
+          "nota": 7,
+          "numeroTemporadas": 1,
+          "episodiosTotais": 10,
+          "episodiosAssistidos": 15,
+          "status": "assistindo"
+        }
+
+  - _id: "req_series_list_all"
+    _type: "request"
+    name: "Series - List All"
+    method: "GET"
+    url: "http://localhost:3000/api/series"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_list_filter_status"
+    _type: "request"
+    name: "Series - List (filter by status)"
+    method: "GET"
+    url: "http://localhost:3000/api/series?status=assistindo"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_list_filter_titulo"
+    _type: "request"
+    name: "Series - List (filter by titulo)"
+    method: "GET"
+    url: "http://localhost:3000/api/series?titulo=Breaking"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_list_filter_nota"
+    _type: "request"
+    name: "Series - List (filter by nota)"
+    method: "GET"
+    url: "http://localhost:3000/api/series?nota=9"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_list_no_token"
+    _type: "request"
+    name: "Series - List (no token)"
+    method: "GET"
+    url: "http://localhost:3000/api/series"
+
+  - _id: "req_series_get_by_id"
+    _type: "request"
+    name: "Series - Get by ID (success)"
+    method: "GET"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_get_by_id_not_found"
+    _type: "request"
+    name: "Series - Get by ID (not found)"
+    method: "GET"
+    url: "http://localhost:3000/api/series/507f1f77bcf86cd799439011"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_get_by_id_invalid_id"
+    _type: "request"
+    name: "Series - Get by ID (invalid ID)"
+    method: "GET"
+    url: "http://localhost:3000/api/series/invalid-id"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_get_by_id_no_token"
+    _type: "request"
+    name: "Series - Get by ID (no token)"
+    method: "GET"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+
+  - _id: "req_series_update_full_success"
+    _type: "request"
+    name: "Series - Update Full (PUT success)"
+    method: "PUT"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Breaking Bad - Updated",
+          "nota": 10,
+          "numeroTemporadas": 5,
+          "episodiosTotais": 62,
+          "episodiosAssistidos": 62,
+          "status": "concluido"
+        }
+
+  - _id: "req_series_update_full_missing_fields"
+    _type: "request"
+    name: "Series - Update Full (missing fields)"
+    method: "PUT"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Only Title"
+        }
+
+  - _id: "req_series_update_full_not_found"
+    _type: "request"
+    name: "Series - Update Full (not found)"
+    method: "PUT"
+    url: "http://localhost:3000/api/series/507f1f77bcf86cd799439011"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "titulo": "Not Found",
+          "nota": 5,
+          "numeroTemporadas": 1,
+          "episodiosTotais": 10,
+          "episodiosAssistidos": 0,
+          "status": "planejado"
+        }
+
+  - _id: "req_series_update_partial_success"
+    _type: "request"
+    name: "Series - Update Partial (PATCH success)"
+    method: "PATCH"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "episodiosAssistidos": 30,
+          "status": "assistindo"
+        }
+
+  - _id: "req_series_update_partial_nota"
+    _type: "request"
+    name: "Series - Update Partial (update nota)"
+    method: "PATCH"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "nota": 9.8
+        }
+
+  - _id: "req_series_update_partial_no_fields"
+    _type: "request"
+    name: "Series - Update Partial (no fields)"
+    method: "PATCH"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {}
+
+  - _id: "req_series_update_partial_not_found"
+    _type: "request"
+    name: "Series - Update Partial (not found)"
+    method: "PATCH"
+    url: "http://localhost:3000/api/series/507f1f77bcf86cd799439011"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "nota": 8
+        }
+
+  - _id: "req_series_delete_success"
+    _type: "request"
+    name: "Series - Delete (success)"
+    method: "DELETE"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_delete_not_found"
+    _type: "request"
+    name: "Series - Delete (not found)"
+    method: "DELETE"
+    url: "http://localhost:3000/api/series/507f1f77bcf86cd799439011"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  - _id: "req_series_delete_no_token"
+    _type: "request"
+    name: "Series - Delete (no token)"
+    method: "DELETE"
+    url: "http://localhost:3000/api/series/<SERIES_ID>"
+
+  - _id: "req_series_delete_invalid_id"
+    _type: "request"
+    name: "Series - Delete (invalid ID)"
+    method: "DELETE"
+    url: "http://localhost:3000/api/series/invalid-id"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <TOKEN_HERE>"
+
+  # ========== USER 2 - UNAUTHORIZED ACCESS SCENARIOS ==========
+
+  - _id: "req_register_user2"
+    _type: "request"
+    name: "Register User 2 (for unauthorized tests)"
+    method: "POST"
+    url: "http://localhost:3000/api/register"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "name": "User Two",
+          "email": "user2@example.com",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_login_user2"
+    _type: "request"
+    name: "Login User 2"
+    method: "POST"
+    url: "http://localhost:3000/api/login"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "email": "user2@example.com",
+          "password": "P@ssw0rd!"
+        }
+
+  - _id: "req_series_get_other_user"
+    _type: "request"
+    name: "Series - Get by ID (other user's series - should fail)"
+    method: "GET"
+    url: "http://localhost:3000/api/series/<USER1_SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <USER2_TOKEN>"
+
+  - _id: "req_series_update_other_user"
+    _type: "request"
+    name: "Series - Update (other user's series - should fail)"
+    method: "PATCH"
+    url: "http://localhost:3000/api/series/<USER1_SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <USER2_TOKEN>"
+    body:
+      mimeType: "application/json"
+      text: |
+        {
+          "nota": 1
+        }
+
+  - _id: "req_series_delete_other_user"
+    _type: "request"
+    name: "Series - Delete (other user's series - should fail)"
+    method: "DELETE"
+    url: "http://localhost:3000/api/series/<USER1_SERIES_ID>"
+    headers:
+      - name: "Authorization"
+        value: "Bearer <USER2_TOKEN>"
 
   - _id: "workspace_1"
     _type: "workspace"
