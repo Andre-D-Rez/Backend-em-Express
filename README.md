@@ -3,9 +3,9 @@
 API RESTful com autenticação JWT, MongoDB e arquitetura em camadas (MVC).
 
 ### Vídeo explicativo
-Assista ao vídeo para uma explicação/demonstração rapída do projeto (cadastro e login) https://youtu.be/l7WnbtVhUq0
+Assista ao vídeo para uma explicação/demonstração rapída do projeto (cadastro e login) https://www.youtube.com/watch?v=l7WnbtVhUq0
 
-Assista ao vídeo para uma explicação/demonstração rapída do projeto (serviço) ***[LINK]***
+Assista ao vídeo para uma explicação/demonstração rapída do projeto (serviço (CRUD)) https://www.youtube.com/watch?v=Q2vwF_D9I_g
 
 ## 📋 Funcionalidades
 
